@@ -20,10 +20,10 @@ def pre_process(image: np.array, device: str, patch_size: int = 4):
     image_tensor = torch.from_numpy(image_rgb.transpose(2, 0, 1))
     image_tensor = image_tensor.unsqueeze(0).to(device)
 
-    _, _, h, w = x.size()
+    _, _, h, w = image_tensor.size()
     mod_pad_h = (patch_size - h % patch_size) % patch_size
     mod_pad_w = (patch_size - w % patch_size) % patch_size
-    x = F.pad(x, (0, mod_pad_w, 0, mod_pad_h), 'reflect')
+    image_tensor = F.pad(image_tensor, (0, mod_pad_w, 0, mod_pad_h), 'reflect')
     return image_tensor
 
 
